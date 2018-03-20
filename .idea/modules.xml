@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChowData.iml" filepath="$PROJECT_DIR$/ChowData.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Chownet-Data-Collection.iml" filepath="$PROJECT_DIR$/Chownet-Data-Collection.iml" />
     </modules>
   </component>
 </project>
