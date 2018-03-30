@@ -1,11 +1,18 @@
 package com.example.user.chowdata;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -56,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.cancel) ImageView cancelButton;
     @BindView(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
     @BindView(R.id.parent) LinearLayout parentLayout;
+    @BindView(R.id.photo_library) ImageView photo_library;
     static final int REQUEST_TAKE_PHOTO = 1;
+    static final int PICK_FROM_GALLERY = 2;
+    private static final int REQUEST_EXTERNAL_STORAGE = 3;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
     ArrayList<String> chows;
     Uri photoPath;
     String currentPhotoPath;
@@ -70,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Timber.plant(new Timber.DebugTree());
+        verifyStoragePermissions(this);
         submitButton.setEnabled(false);
         cancelButton.setEnabled(false);
         chows = new ArrayList<String>();
@@ -103,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivityForResult(Util.takePicture(getApplicationContext()), REQUEST_TAKE_PHOTO);
+            }
+        });
+
+        photo_library.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent  = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
             }
         });
 
@@ -274,6 +297,18 @@ public class MainActivity extends AppCompatActivity {
         inputStream.close();
     }
 
+    public static void verifyStoragePermissions(Activity activity) {
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
@@ -290,6 +325,17 @@ public class MainActivity extends AppCompatActivity {
                     photofile.delete();
                 }
             }
+            submitButton.setEnabled(true);
+            cancelButton.setEnabled(true);
+        }
+        else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            Glide.with(getApplicationContext())
+                    .load(selectedImage)
+                    .centerCrop()
+                    .into(foodImage);
+            String tempPath = Util.getRealPath(this, selectedImage);
+            currentPhotoPath = Util.compressImage(getApplicationContext(), tempPath);
             submitButton.setEnabled(true);
             cancelButton.setEnabled(true);
         }
