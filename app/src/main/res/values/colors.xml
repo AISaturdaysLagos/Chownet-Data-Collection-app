@@ -3,6 +3,7 @@
     <color name="colorPrimary">#1d0959</color>
     <color name="colorPrimaryDark">#1d0959</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="success">#009900</color>
     <color name="selected_color">#FF4081</color>
     <color name="deselected_color">#7d7e72</color>
     <color name="deselected_font_color">#eaff00</color>

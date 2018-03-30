@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.LENGTH_SHORT);
             View snackBarView = snackbar.getView();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                snackBarView.setBackgroundColor(getColor(R.color.colorAccent));
+                snackBarView.setBackgroundColor(getColor(R.color.success));
             }
             snackbar.show();
         }
@@ -149,9 +149,14 @@ public class MainActivity extends AppCompatActivity {
     public void uploadFile(){
         List<FoodChip> foodSelected = (List<FoodChip>) chipsInput.getSelectedChipList();
         if(foodSelected.isEmpty()){
-            Snackbar.make(coordinatorLayout,
+            Snackbar snackbar = Snackbar.make(coordinatorLayout,
                     "Add food by choosing from the dropdown when you start typing the food",
-                    Snackbar.LENGTH_LONG).show();
+                    Snackbar.LENGTH_LONG);
+            View snackBarView = snackbar.getView();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                snackBarView.setBackgroundColor(getColor(R.color.colorAccent));
+            }
+            snackbar.show();
         } else {
             submitButton.setEnabled(false);
             inAnimation = new AlphaAnimation(0f, 1f);
@@ -189,8 +194,6 @@ public class MainActivity extends AppCompatActivity {
                             progressBarHolder.setAnimation(outAnimation);
                             progressBarHolder.setVisibility(View.GONE);
                             submitButton.setEnabled(false);
-//                            Snackbar.make(coordinatorLayout, "Foods successfully uploaded",
-//                                    Snackbar.LENGTH_SHORT).show();
                             message = "Foods successfully uploaded";
                             parentLayout.setVisibility(View.VISIBLE);
                             cancelFile();
@@ -205,8 +208,6 @@ public class MainActivity extends AppCompatActivity {
                             submitButton.setEnabled(false);
                             parentLayout.setVisibility(View.VISIBLE);
                             cancelFile();
-//                            Snackbar.make(coordinatorLayout, "You probably don't have internet connection",
-//                                    Snackbar.LENGTH_SHORT).show();
                             message = "You probably don't have internet connection";
                         }
 
