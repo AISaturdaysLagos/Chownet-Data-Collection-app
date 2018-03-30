@@ -3,4 +3,11 @@
     <string name="submit">Submit</string>
     <string name="image_desctiption"> Take a picture of a food item</string>
     <string name="file_not_created">Image file cannot be created</string>
+    <string name="description"><![CDATA[ChowData was built by The  <a href="https://twitter.com/AISaturdayLagos">AI Saturday Lagos Community</a>.<br />
+        For the purpose of collecting local food datasets which would then be used for building a local food recognition app called Chownet.<br/>
+        To see the list of food and we encourage you to add your suggestions, check this excel spreadsheet <a href="https://t.co/rkNjSjWBH8"> Chownet Food List</a>.<br/>
+        For enquiries, Shoot Femi an email: <a href="mailto:azeezfemi17937@yahoo.com">azeezfemi17937@yahoo.com</a> <br />
+        Or Tejumade: <a href="mailto:tmafonja1@gmail.com">tmafonja1@gmail.com</a> <br />
+        This app is open sourced at <a href ="https://github.com/kantologist/Emergent"> github.com/kantologist/Emergent</a> <br />
+        Other open sourced libraries used are listed below. ]]></string>
 </resources>
